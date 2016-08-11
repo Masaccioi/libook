@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+  	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+		.content{
+			width: 70%;
+			background-color: #E7E7E8;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<main ng-app="WikiApp" ng-controller="MainCtrl">
+      <div class="content">
+      	 <p>{{results.author}}</p>
+      </div>
+  </main>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.2/angular-animate.min.js"></script>
+	<script type="text/javascript">
+	var app = angular.module('WikiApp', ['ngAnimate']);
+app.controller('MainCtrl', function($scope, $http, $timeout) {
+  $scope.results = [];
+  $scope.search = function() {
+    $scope.results = [];
+    help.addClass('hide');
+    search.removeClass('fullHeight');
+    var url="http://www.libooc.com/libooc/ebook/detail?ebid=6";
+
+
+    $http.get(url).success(function(data) {
+      // var results = data.query.pages;
+      // angular.forEach(results, function(v,k) {
+      //   $scope.results.push({title: v.title, body: v.extract, page: page + v.pageid})
+      // })
+
+      var results=data.indexs;
+      // console.log(results.index);
+      console.log(results);
+      var i=1;
+      angular.forEach(results,function(v,k){
+        $scope.results.push({
+          
+          author:v.author
+          
+        })
+      })
+    });
+  }
+});
+	</script>
+</body>
+</html>
